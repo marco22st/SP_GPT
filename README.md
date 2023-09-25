@@ -1,2 +1,3 @@
 # SP_GPT
-Our own ChatGPT!
+## Javascript ChatGPT Clone
+## React ChatGPT Clone
