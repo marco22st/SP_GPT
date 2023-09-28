@@ -1,10 +1,10 @@
 import {useState, useEffect} from "react";
 
 function App() {
-    const [value, setValue] = useState(null)
-    const [message, setMessage] = useState(null)
-    const [previousChats, setPreviousChats] = useState([])
-    const [currentTitle, setCurrentTitle] = useState(null)
+    const [value, setValue] = useState(null)//wichtig
+    const [message, setMessage] = useState(null)//wichtig
+    const [previousChats, setPreviousChats] = useState([])//wichtig
+    const [currentTitle, setCurrentTitle] = useState(null)//wichtig
 
     const createNewChat = () => {
         setMessage(null)
@@ -29,7 +29,7 @@ function App() {
             }
         }
         try {
-            const response = await fetch('http://localhost:8080/completions', options)
+            const response = await fetch('http://localhost:8000/completions', options)
             const data = await response.json()
             setMessage(data.choices[0].message)
         } catch (error) {
@@ -43,7 +43,7 @@ function App() {
         }
         if(currentTitle && value && message) {
             setPreviousChats(previousChats => (
-                [...previousChats, {
+                [...previousChats, {//wichtig
                     title: currentTitle,
                     role: 'user',
                     content: value
@@ -56,8 +56,8 @@ function App() {
         }
     }, [message, currentTitle])
 
-    const currentChat = previousChats.filter(previousChats => previousChats.title === currentTitle)
-    const uniqueTitles = Array.from(new Set(previousChats.map(previousChat => previousChat.title)))
+    const currentChat = previousChats.filter(previousChats => previousChats.title === currentTitle) //wichtig
+    const uniqueTitles = Array.from(new Set(previousChats.map(previousChat => previousChat.title)))//wichtig
 
   return (
     <div className="app">

@@ -1,4 +1,4 @@
-const API_KEY = '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'
+const API_KEY = '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'
 const submitButton = document.querySelector('#submit')
 const outputElement = document.querySelector('#output')
 const inputElement = document.querySelector('input')
@@ -13,7 +13,7 @@ async function getMessage() {
     const options = {
         method: 'POST',
         headers: {
-            'Authorization': 'Bearer ${API_KEY}',
+            'Authorization': `Bearer ${API_KEY}`,
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
