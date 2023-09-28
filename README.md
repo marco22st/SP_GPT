@@ -6,7 +6,7 @@ const API_KEY = 'Beispiel Key'
 ``` 
 Konstante wird erstellt um Anfragen an die OpenAI-API zu autorisieren
 
-```javascript
+``` javascript
 const submitButton = document.querySelector('#submit')
 const outputElement = document.querySelector('#output')
 const inputElement = document.querySelector('input')
