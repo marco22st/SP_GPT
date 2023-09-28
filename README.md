@@ -1,6 +1,6 @@
 # SP_GPT
 ## Javascript ChatGPT Clone
-### JavaScript Dokumentation
+### JavaScript 
 ``` javascript 
 const API_KEY = 'Beispiel Key'
 ``` 
