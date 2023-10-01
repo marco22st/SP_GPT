@@ -79,7 +79,7 @@ buttonElement.addEventListener('click', clearInput)
 Klickereignis auf "Löschen"-Button wird hinzugefügt.
 Wenn geklickt, wird clearInput(); aufgerufen, um Eingabefeld zu leeren.
 
-###HTML
+### HTML 
 ``` html
 <!DOCTYPE html>
 <html lang="en">
@@ -124,6 +124,179 @@ side-bar repräsentiert die Seitenleiste des Chat-Interfaces.
 main repäsentiert den Hauptbereich des Chat-Interfaces.
 info repräsntiert eine Informationsmeldung.
 script verweist auf exzterne JavaScript-Datei.
+
+### CSS
+``` css
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap');
+```
+Dieser Teil importiert eine Schriftart von Google Fonts, um sie in der gesamten Website zu verwenden.
+
+``` css
+* {
+    color: #fff;
+    font-family: 'Open Sans', sans-serif;
+}
+```
+Dieser Selektor und seine Eigenschaften werden auf alle HTML-Elemente angewendet. 
+Es wird immer Open Sans verwendet sonst sans-serif.
+
+``` css
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #343541;
+    display: flex;
+}
+```
+Dieser Abschnitt enthält die Stildefinition das body-Element .
+flex wird verwendet, um Elemente in einer flexiblen Weise anzuordnen.
+
+``` css
+h1 {
+    font-size: 33px;
+    font-weight: 600;
+    padding: 200px 0;
+}
+```
+Hier wird die Darstellung von h1-Überschrift festgelegt. 
+
+``` css
+.side-bar {
+    background-color: #202123;
+    width: 244px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+```
+Diese Klasse definiert den Stil der Seitenleiste. 
+justify-content: verteilung auf der Hauptachse.
+space-between bewirkt, dass der verfügbare Platz zwischen den Elementen gleichmäßig verteilt wird.
+
+``` css
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: space-between;
+    height: 100vh;
+    width: 100%;
+}
+```
+Dieser Abschnitt enthält Stildefinitionen für den Hauptinhalt der Webseite.
+
+``` css
+.bottom-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+```
+Hier wird der Stil für den unteren Abschnitt der Seite definiert. 
+
+``` css
+.info {
+    color: rgba(255,255,255,0.5);
+    font-size: 11px;
+    padding: 10px;
+}
+```
+Dies ist der Stil für Text mit der Klasse info.
+
+``` css
+input {
+    border: none;
+    background-color: rgba(255,255,255,0.05);
+    width: 100%;
+    font-size: 20px;
+    padding: 12px 15px;
+    border-radius: 5px;
+    box-shadow: rgba(0,0,0,0.05) 0 54px 55px,
+    rgba(0,0,0,0.05) 0 -12px 30px,
+    rgba(0,0,0,0.05) 0 4px 6px,
+    rgba(0,0,0,0.09) 0 -3px 5px;
+}
+```
+Diese Definitionen gelten für Eingabefelder auf der Seite.
+Keine Umrandung, leichte Hintergundfarbe...
+
+``` css
+input:focus {
+    outline: none;
+}
+```
+Styling des input-Elements wird geändert, wenn es aktiviert wird.
+
+``` css
+.input-container {
+    position: relative;
+    width: 100%;
+    max-width: 650px;
+}
+
+.input-container #submit {
+    position: absolute;
+    right: 0;
+    bottom: 15px;
+    cursor: pointer;
+}
+```
+Dieser Abschnitt definiert den Stil für ein Formularelement mit der Klasse input-container und das enthaltene Element mit der ID submit.
+Submit-Element wird am rechten unteren Rand positioniert und enthält einen Cursor in Form einer Hand.
+
+``` css
+button {
+    border: solid 0.5px rgba(255,255,255,0.5);
+    background-color: transparent;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+}
+```
+Dieser Stil wird auf allen button-Elementen angewendet.
+
+``` css
+nav {
+    border-top: solid 0.5px rgba(255,255,255,0.5);
+    padding: 10px;
+    margin: 10px;
+}
+```
+Hier wird der Stil für Navigationsleisten definiert.
+
+``` css
+.history {
+    padding: 10px;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.history p {
+    cursor: pointer;
+}
+```
+Diese Definitionen sind für Elemente in einem Abschnitt mit der Klasse history.
+history-Element enthält einen Cursor in Form einer Hand.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
