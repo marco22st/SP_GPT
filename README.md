@@ -79,6 +79,55 @@ buttonElement.addEventListener('click', clearInput)
 Klickereignis auf "Löschen"-Button wird hinzugefügt.
 Wenn geklickt, wird clearInput(); aufgerufen, um Eingabefeld zu leeren.
 
+###HTML
+``` html
+<!DOCTYPE html>
+<html lang="en">
+```
+Handelt um eine HTML5 Seite und kennzeichtnet den Beginn des HTML-Dokuments und gibt Spraceh an. ("en" = Englisch)
+
+``` html
+<head>
+  <meta charset="UTF-8">
+  <title>JavaScript ChatGPT Clone</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+```
+Dieser Abschnitt enthält Informationen über die Website die nicht direkt angezeigt werden, sowie Zeichensatz, Titel der Website und Styling.
+
+``` html
+<body>
+<section class="side-bar">
+  <button>New Chat</button>
+  <div class="history"></div>
+  <nav>
+    <p>Made by Phillip</p>
+  </nav>
+</section>
+<section class="main">
+  <h1>PhillipGPT</h1>
+  <p id="output"></p>
+  <div class="bottom-section">
+    <div class="input-container">
+      <input/>
+      <div id="submit">➢</div>
+    </div>
+  </div>
+  <p class="info">Free Research Preview. ChatGPT may produce inaccurate information about people, places, or facts. ChatGPT August 3 Version</p>
+</section>
+
+<script src="app.js"></script>
+</body>
+```
+Dieser Abschnitt enthält tatsächlichen Inhalt der Website, der angezeigt wird. 
+side-bar repräsentiert die Seitenleiste des Chat-Interfaces.
+main repäsentiert den Hauptbereich des Chat-Interfaces.
+info repräsntiert eine Informationsmeldung.
+script verweist auf exzterne JavaScript-Datei.
+
+
+
+
 
 
 
