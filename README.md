@@ -284,7 +284,6 @@ Hier wird der Stil für Navigationsleisten definiert.
 Diese Definitionen sind für Elemente in einem Abschnitt mit der Klasse history.
 history-Element enthält einen Cursor in Form einer Hand.
 ## React ChatGPT Clone
-## Doku POS
 ### Klasse "app.js"
 ```javascript
 const [value, setValue] = useState(null)
@@ -292,8 +291,6 @@ const [message, setMessage] = useState(null)
 const [previousChats, setPreviousChats] = useState([])
 const [currentTitle, setCurrentTitle] = useState(null)
 ```
-
-
 
 ```javascript
 const createNewChat = () => {
@@ -672,6 +669,7 @@ nav {
     width: 100%;
     max-width: 650px;
 }
+```
 
 ```css
 input {
