@@ -283,25 +283,589 @@ Hier wird der Stil für Navigationsleisten definiert.
 ```
 Diese Definitionen sind für Elemente in einem Abschnitt mit der Klasse history.
 history-Element enthält einen Cursor in Form einer Hand.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## React ChatGPT Clone
+## Doku POS
+### Klasse "app.js"
+```javascript
+const [value, setValue] = useState(null)
+const [message, setMessage] = useState(null)
+const [previousChats, setPreviousChats] = useState([])
+const [currentTitle, setCurrentTitle] = useState(null)
+```
+
+
+
+```javascript
+const createNewChat = () => {
+    setMessage(null)
+    setValue('')
+    setCurrentTitle(null)
+}
+```
+
+```javascript
+const handleClick = (uniqueTitle) => {
+    setCurrentTitle(uniqueTitle)
+    setMessage(null)
+    setValue('')
+}
+```
+
+```javascript
+const getMessages = async () => {
+    const options = {
+        method: 'POST',
+        body: JSON.stringify({
+            message: value
+        }),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+    try {
+        const response = await fetch('http://localhost:8000/completions', options)
+        const data = await response.json()
+        setMessage(data.choices[0].message)
+    } catch (error) {
+        console.error(error)
+    }
+}
+```
+
+```javascript
+useEffect(() => {
+    if (!currentTitle && value && message) {
+        setCurrentTitle(value)
+    }
+    if(currentTitle && value && message) {
+        setPreviousChats(previousChats => (
+            [...previousChats, {
+                title: currentTitle,
+                role: 'user',
+                content: value
+            }, {
+                title: currentTitle,
+                role: message.role,
+                content: message.content
+            }]
+        ))
+    }
+}, [message, currentTitle])
+```
+
+```javascript
+const currentChat = previousChats.filter(previousChats => previousChats.title === currentTitle)
+const uniqueTitles = Array.from(new Set(previousChats.map(previousChat => previousChat.title)))
+```
+
+```javascript
+<div className="app">
+    <section className="side-bar">
+        <button onClick={createNewChat}>+ New Chat</button>
+        <ul className="history">
+            {uniqueTitles?.map((uniqueTitle, index) => <li key={index} onClick={() => handleClick(uniqueTitle)}>{uniqueTitle}</li>)}
+        </ul>
+        <nav>
+            <p>Made by Marco</p>
+        </nav>
+    </section>
+    <section className="main">
+        {!currentTitle && <h1>MarcoGPT</h1>}
+        <ul className="feed">
+            {currentChat.map((chatMessage, index) => <li key={index}>
+                <p className='role'>{chatMessage.role}</p>
+                <p>{chatMessage.content}</p>
+            </li>)}
+        </ul>
+        <div className="bottom-section">
+            <div className="input-container">
+                <input value={value} onChange={(e) => setValue(e.target.value)}/>
+                <div id="submit" onClick={getMessages}>➢</div>
+            </div>
+            <p className="info">Free Research Preview. ChatGPT may produce inaccurate information about people, places, or facts. ChatGPT August 3 Version</p>
+        </div>
+    </section>
+</div>
+```
+
+#### finale Version
+```javascript
+import {useState, useEffect} from "react";
+
+function App() {
+    const [value, setValue] = useState(null)
+    const [message, setMessage] = useState(null)
+    const [previousChats, setPreviousChats] = useState([])
+    const [currentTitle, setCurrentTitle] = useState(null)
+
+    const createNewChat = () => {
+        setMessage(null)
+        setValue('')
+        setCurrentTitle(null)
+    }
+
+    const handleClick = (uniqueTitle) => {
+        setCurrentTitle(uniqueTitle)
+        setMessage(null)
+        setValue('')
+    }
+
+    const getMessages = async () => {
+        const options = {
+            method: 'POST',
+            body: JSON.stringify({
+                message: value
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+        try {
+            const response = await fetch('http://localhost:8000/completions', options)
+            const data = await response.json()
+            setMessage(data.choices[0].message)
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    useEffect(() => {
+        if (!currentTitle && value && message) {
+            setCurrentTitle(value)
+        }
+        if(currentTitle && value && message) {
+            setPreviousChats(previousChats => (
+                [...previousChats, {//wichtig
+                    title: currentTitle,
+                    role: 'user',
+                    content: value
+                }, {
+                    title: currentTitle,
+                    role: message.role,
+                    content: message.content
+                }]
+            ))
+        }
+    }, [message, currentTitle])
+
+    const currentChat = previousChats.filter(previousChats => previousChats.title === currentTitle)
+    const uniqueTitles = Array.from(new Set(previousChats.map(previousChat => previousChat.title)))
+
+  return (
+    <div className="app">
+      <section className="side-bar">
+        <button onClick={createNewChat}>+ New Chat</button>
+        <ul className="history">
+            {uniqueTitles?.map((uniqueTitle, index) => <li key={index} onClick={() => handleClick(uniqueTitle)}>{uniqueTitle}</li>)}
+        </ul>
+        <nav>
+          <p>Made by Marco</p>
+        </nav>
+      </section>
+      <section className="main">
+          {!currentTitle && <h1>MarcoGPT</h1>}
+          <ul className="feed">
+              {currentChat.map((chatMessage, index) => <li key={index}>
+                  <p className='role'>{chatMessage.role}</p>
+                  <p>{chatMessage.content}</p>
+              </li>)}
+          </ul>
+          <div className="bottom-section">
+              <div className="input-container">
+                  <input value={value} onChange={(e) => setValue(e.target.value)}/>
+                  <div id="submit" onClick={getMessages}>➢</div>
+              </div>
+              <p className="info">Free Research Preview. ChatGPT may produce inaccurate information about people, places, or facts. ChatGPT August 3 Version</p>
+          </div>
+      </section>
+    </div>
+  )
+}
+
+export default App
+```
+
+### Klasse "server.js"
+```javascript
+const PORT = 8000
+const express = require('express')
+const cors = require('cors')
+require('dotenv').config()
+const app = express()
+app.use(express.json())
+app.use(cors())
+```
+
+```javascript
+const API_KEY = process.env.API_KEY
+```
+
+```javascript
+app.post('/completions', async (req, res) => {
+    const options = {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${API_KEY}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            model: 'gpt-3.5-turbo',
+            messages: [{role: 'user', content: req.body.message}],
+            max_tokens: 100,
+        })
+    }
+    try {
+        const response = await fetch('https://api.openai.com/v1/chat/completions', options)
+        const data = await response.json()
+        res.send(data)
+    } catch (error) {
+        console.error(error)
+    }
+})
+```
+
+```javascript
+app.listen(PORT, () => console.log('Your server is running on PORT' + PORT))
+```
+
+#### finale Version
+```javascript
+const PORT = 8000
+const express = require('express')
+const cors = require('cors')
+require('dotenv').config()
+const app = express()
+app.use(express.json())
+app.use(cors())
+
+const API_KEY = process.env.API_KEY
+
+app.post('/completions', async (req, res) => {
+    const options = {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${API_KEY}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            model: 'gpt-3.5-turbo',
+            messages: [{role: 'user', content: req.body.message}],
+            max_tokens: 100,
+        })
+    }
+    try {
+        const response = await fetch('https://api.openai.com/v1/chat/completions', options)
+        const data = await response.json()
+        res.send(data)
+    } catch (error) {
+        console.error(error)
+    }
+})
+
+app.listen(PORT, () => console.log('Your server is running on PORT' + PORT))
+```
+
+## Klasse "index.css"
+```css
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap');
+```
+
+```css
+* {
+    color: #fff;
+    font-family: 'Open Sans', sans-serif;
+}
+```
+
+```css
+body {
+    margin: 0;
+    padding: 0;
+}
+```
+
+```css
+.app {
+    background-color: #343541;
+    display: flex;
+}
+```
+
+```css
+.side-bar {
+    background-color: #202123;
+    height: 100vh;
+    width: 244px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+```
+
+```css
+button {
+    border: solid 0.5px rgba(255,255,255,0.5);
+    background-color: transparent;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+}
+```
+
+```css
+nav {
+    border-top: solid 0.5px rgba(255,255,255,0.5);
+    padding: 10px;
+    margin: 10px;
+}
+```
+
+```css
+.history {
+    padding: 10px;
+    margin: 10px;
+    height: 100%;
+}
+```
+
+```css
+.history li {
+    list-style-type: none;
+    padding: 15px 0;
+    cursor: pointer;
+}
+```
+
+```css
+.main {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+}
+```
+
+```css
+.info {
+    color: rgba(255,255,255,0.5);
+    font-size: 11px;
+    padding: 10px;
+}
+```
+
+```css
+.bottom-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+```
+
+```css
+.input-container {
+    position: relative;
+    width: 100%;
+    max-width: 650px;
+}
+
+```css
+input {
+    width: 100%;
+    border: none;
+    font-size: 20px;
+    background-color: rgba(255,255,255,0.05);
+    padding: 12px 15px;
+    border-radius: 5px;
+    box-shadow: rgba(0,0,0,0.05) 0 54px 55px,
+    rgba(0,0,0,0.05) 0 -12px 30px,
+    rgba(0,0,0,0.05) 0 4px 6px,
+    rgba(0,0,0,0.05) 0 12px 3px,
+    rgba(0,0,0,0.05) 0 -3px 5px;
+}
+```
+
+```css
+input:focus {
+    outline: none;
+}
+```
+
+```css
+#submit {
+    position: absolute;
+    bottom: 15px;
+    right: 0;
+    cursor: pointer;
+}
+```
+
+```css
+.feed {
+    overflow: scroll;
+    width: 100%;
+    padding: 0;
+}
+```
+
+```css
+.feed li {
+    display: flex;
+    background-color: #444654;
+    width: 100%;
+    padding: 20px;
+    margin: 20px 0;
+}
+```
+
+```css
+.feed p {
+    color: rgba(255,255,255,0.8);
+    font-size: 14px;
+    text-align: left;
+}
+```
+
+```css
+.feed p.role {
+    min-width: 100px;
+}
+```
+
+#### finale Version
+```css
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap');
+
+* {
+    color: #fff;
+    font-family: 'Open Sans', sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.app {
+    background-color: #343541;
+    display: flex;
+}
+
+.side-bar {
+    background-color: #202123;
+    height: 100vh;
+    width: 244px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+button {
+    border: solid 0.5px rgba(255,255,255,0.5);
+    background-color: transparent;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+}
+
+nav {
+    border-top: solid 0.5px rgba(255,255,255,0.5);
+    padding: 10px;
+    margin: 10px;
+}
+
+.history {
+    padding: 10px;
+    margin: 10px;
+    height: 100%;
+}
+
+.history li {
+    list-style-type: none;
+    padding: 15px 0;
+    cursor: pointer;
+}
+
+.main {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+}
+
+.info {
+    color: rgba(255,255,255,0.5);
+    font-size: 11px;
+    padding: 10px;
+}
+
+.bottom-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.input-container {
+    position: relative;
+    width: 100%;
+    max-width: 650px;
+}
+
+input {
+    width: 100%;
+    border: none;
+    font-size: 20px;
+    background-color: rgba(255,255,255,0.05);
+    padding: 12px 15px;
+    border-radius: 5px;
+    box-shadow: rgba(0,0,0,0.05) 0 54px 55px,
+    rgba(0,0,0,0.05) 0 -12px 30px,
+    rgba(0,0,0,0.05) 0 4px 6px,
+    rgba(0,0,0,0.05) 0 12px 3px,
+    rgba(0,0,0,0.05) 0 -3px 5px;
+}
+
+input:focus {
+    outline: none;
+}
+
+#submit {
+    position: absolute;
+    bottom: 15px;
+    right: 0;
+    cursor: pointer;
+}
+
+.feed {
+    overflow: scroll;
+    width: 100%;
+    padding: 0;
+}
+
+.feed li {
+    display: flex;
+    background-color: #444654;
+    width: 100%;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.feed p {
+    color: rgba(255,255,255,0.8);
+    font-size: 14px;
+    text-align: left;
+}
+
+.feed p.role {
+    min-width: 100px;
+}
+```
