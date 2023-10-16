@@ -1,33 +1,37 @@
 package at.htlle.cheatgpt;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.Set;
 
 @Entity
 public class ChatHistory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private long histroyid;
+    private String title;
+    @OneToMany(mappedBy = "chatHistory")
+    private Set<Message> messages;
 
-    private String role;
-    private String message;
-
-    public String getRole() {
-        return role;
+    public long getHistroyid() {
+        return histroyid;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+
+    public String getTitle() {
+        return title;
     }
 
-    public String getMessage() {
-        return message;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public Set<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(Set<Message> messages) {
+        this.messages = messages;
     }
 }
