@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spring REST Client Example</title>
+</head>
+<body>
+
+<h1>Message-Daten</h1>
+
+<h2>Daten hinzufügen:</h2>
+<form id="addForm">
+    Role: <input type="text" id="role" required>
+    Message: <input type="text" id="message" required>
+    <input type="submit" value="Hinzufügen">
+</form>
+
+<h2>Daten abrufen:</h2>
+<button onclick="fetchData()">Daten abrufen</button>
+<ul id="dataList"></ul>
+
+<script>
+    const addForm = document.getElementById('addForm');
+    const roleInput = document.getElementById('role');
+    const messageInput = document.getElementById('message');
+    const dataList = document.getElementById('dataList');
+
+    addForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const data = {
+            'role': roleInput.value,
+            'message': messageInput.value
+        };
+
+        fetch('http://localhost:8080/message', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': 'http://localhost:8080'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            alert('Message hinzugefügt!');
+            roleInput.value = '';
+            messageInput.value = '';
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+
+    function fetchData() {
+        fetch('http://localhost:8080/message')
+        .then(response => response.json())
+        .then(data => {
+            dataList.innerHTML = '';
+            data._embedded.message.forEach(message => {
+                const li = document.createElement('li');
+                li.textContent = `${message.role} ${message.message}`;
+                dataList.appendChild(li);
+            });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+</script>
+
+</body>
+</html>

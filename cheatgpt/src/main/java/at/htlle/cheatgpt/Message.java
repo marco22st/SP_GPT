@@ -2,19 +2,23 @@ package at.htlle.cheatgpt;
 
 import jakarta.persistence.*;
 
-import java.util.Set;
-
 @Entity
+@Table(
+        name = "Chat_Message"
+)
 public class Message {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "chat_message_id")
     private long messageid;
+    @Column(name = "chat_message_role")
     private String role;
-    private String message;
+    @Column(name = "chat_message_content")
+    private String content;
 
     @ManyToOne
-    @JoinColumn(name = "historyid")
+    @JoinColumn(name = "chat_history_id")
     private ChatHistory chatHistory;
 
     public long getMessageid() {
@@ -29,12 +33,12 @@ public class Message {
         this.role = role;
     }
 
-    public String getMessage() {
-        return message;
+    public String getContent() {
+        return content;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public ChatHistory getChatHistory() {

@@ -5,19 +5,24 @@ import jakarta.persistence.*;
 import java.util.Set;
 
 @Entity
+@Table(
+        name = "Chat_Histroy",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"chat_histroy_name"})
+)
 public class ChatHistory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "chat_histroy_id")
     private long histroyid;
+    @Column(name = "chat_histroy_name")
     private String title;
-    @OneToMany(mappedBy = "chatHistory")
+    @OneToMany(mappedBy = "chatHistory", fetch = FetchType.LAZY)
     private Set<Message> messages;
 
     public long getHistroyid() {
         return histroyid;
     }
-
 
     public String getTitle() {
         return title;
