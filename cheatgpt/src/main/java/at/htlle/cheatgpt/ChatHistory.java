@@ -20,6 +20,9 @@ public class ChatHistory {
     @OneToMany(mappedBy = "chatHistory", fetch = FetchType.LAZY)
     private Set<Message> messages;
 
+    public ChatHistory() {
+    }
+
     public long getHistroyid() {
         return histroyid;
     }

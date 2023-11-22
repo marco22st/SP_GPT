@@ -21,6 +21,9 @@ public class Message {
     @JoinColumn(name = "chat_history_id")
     private ChatHistory chatHistory;
 
+    public Message() {
+    }
+
     public long getMessageid() {
         return messageid;
     }
