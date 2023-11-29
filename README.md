@@ -494,82 +494,84 @@ Diese Klasse handelt um eine Chat Anwendung mit Funktionen zum Erstellen neuer C
 
 ### Klasse "server.js"
 ```javascript
-const PORT = 8000
-const express = require('express')
-const cors = require('cors')
-require('dotenv').config()
-const app = express()
-app.use(express.json())
-app.use(cors())
+const PORT = 8000 // Das ist der Port, auf dem der Server zuhören wird.
+const express = require('express') // Importiert das Node.js-Modul express und erleichtert Erstellen von Servern und Routing
+const cors = require('cors') // Cross-Origin Resource Sharing erlaubt  HTTP-Anforderungen von unterschiedlichen Ursprüngen
+require('dotenv').config() // lädt Konfigurationsvariablen aus einer optionalen .env Datei in den Umgebungsvariablen
+const app = express() // Erstellt eine Express-Anwendung, die alle Funktionen des Express-Frameworks nutzt
+app.use(express.json()) // Funktion, die die Verarbeitung von JSON-Daten in den eingehenden Anforderungen ermöglicht
+app.use(cors()) // Ermöglicht Ressourcen von einer anderen Domäne als der ursprünglichen Domäne der Anwendung anzufordern
 ```
 
 ```javascript
-const API_KEY = process.env.API_KEY
+const API_KEY = process.env.API_KEY // rocess.env.API_KEY wird verwendet, um den Wert der Umgebungsvariable API_KEY zu extrahieren
 ```
 
 ```javascript
-app.post('/completions', async (req, res) => {
+app.post('/completions', async (req, res) => { // Definiert die Konfigurationsoptionen für die Anfrage an die OpenAI API
+    const options = {
     const options = {
         method: 'POST',
         headers: {
-            'Authorization': `Bearer ${API_KEY}`,
+            'Authorization': `Bearer ${API_KEY}`, // Setzt den API-Schlüssel als Authorization-Header
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            model: 'gpt-3.5-turbo',
-            messages: [{role: 'user', content: req.body.message}],
-            max_tokens: 100,
+            model: 'gpt-3.5-turbo', // GPT-3-Modell, das verwendet werden soll
+            messages: [{role: 'user', content: req.body.message}], // Benutzer-Nachricht für die Chat Interaktion
+            max_tokens: 100, // Maximale Anzahl der generierten Tokens in der Antwort
         })
     }
-    try {
-        const response = await fetch('https://api.openai.com/v1/chat/completions', options)
-        const data = await response.json()
-        res.send(data)
+    try { 
+        const response = await fetch('https://api.openai.com/v1/chat/completions', options) // Sendet Anfrage an die OpenAI API
+        const data = await response.json() // Verarbeitet die empfangene Antwort von der OpenAI API als JSON
+        res.send(data) // Sendet die verarbeiteten Daten als Antwort auf die ursprüngliche Anfrage zurück
     } catch (error) {
-        console.error(error)
+        console.error(error) // Behandlet Fehler, falls die Anfrage an die OpenAI API fehlschlägt
     }
 })
 ```
+Diese Klasse ermöglicht es dem Server, Benutzeranfragen für Chat Anfrage an die OpenAI GPT-3-API zu senden und die generierten Antworten an den Client zurückzugeben.
 
 ```javascript
-app.listen(PORT, () => console.log('Your server is running on PORT' + PORT))
+app.listen(PORT, () => console.log('Your server is running on PORT' + PORT)) // verwendet die app.listen-Methode, um den Server zu starten und auf eingehende Anfragen auf einem bestimmten Port zu hören
 ```
 
 #### finale Version
 ```javascript
-const PORT = 8000
-const express = require('express')
-const cors = require('cors')
-require('dotenv').config()
-const app = express()
-app.use(express.json())
-app.use(cors())
+const PORT = 8000 // Das ist der Port, auf dem der Server zuhören wird.
+const express = require('express') // Importiert das Node.js-Modul express und erleichtert Erstellen von Servern und Routing
+const cors = require('cors') // Cross-Origin Resource Sharing erlaubt  HTTP-Anforderungen von unterschiedlichen Ursprüngen
+require('dotenv').config() // lädt Konfigurationsvariablen aus einer optionalen .env Datei in den Umgebungsvariablen
+const app = express() // Erstellt eine Express-Anwendung, die alle Funktionen des Express-Frameworks nutzt
+app.use(express.json()) Funktion, die die Verarbeitung von JSON-Daten in den eingehenden Anforderungen ermöglicht
+app.use(cors()) // Ermöglicht Ressourcen von einer anderen Domäne als der ursprünglichen Domäne der Anwendung anzufordern
 
-const API_KEY = process.env.API_KEY
+const API_KEY = process.env.API_KEY // rocess.env.API_KEY wird verwendet, um den Wert der Umgebungsvariable API_KEY zu extrahieren
 
-app.post('/completions', async (req, res) => {
+app.post('/completions', async (req, res) => { // Definiert die Konfigurationsoptionen für die Anfrage an die OpenAI API
     const options = {
         method: 'POST',
         headers: {
-            'Authorization': `Bearer ${API_KEY}`,
+            'Authorization': `Bearer ${API_KEY}`, // Setzt den API-Schlüssel als Authorization-Header
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            model: 'gpt-3.5-turbo',
-            messages: [{role: 'user', content: req.body.message}],
-            max_tokens: 100,
+            model: 'gpt-3.5-turbo', // GPT-3-Modell, das verwendet werden soll
+            messages: [{role: 'user', content: req.body.message}], // Benutzer-Nachricht für die Chat Interaktion
+            max_tokens: 100, // Maximale Anzahl der generierten Tokens in der Antwort
         })
     }
     try {
-        const response = await fetch('https://api.openai.com/v1/chat/completions', options)
-        const data = await response.json()
-        res.send(data)
+        const response = await fetch('https://api.openai.com/v1/chat/completions', options) // Sendet Anfrage an die OpenAI API
+        const data = await response.json() // Verarbeitet die empfangene Antwort von der OpenAI API als JSON
+        res.send(data) // Sendet die verarbeiteten Daten als Antwort auf die ursprüngliche Anfrage zurück
     } catch (error) {
-        console.error(error)
+        console.error(error) // Behandlet Fehler, falls die Anfrage an die OpenAI API fehlschlägt
     }
 })
 
-app.listen(PORT, () => console.log('Your server is running on PORT' + PORT))
+app.listen(PORT, () => console.log('Your server is running on PORT' + PORT)) // verwendet die app.listen-Methode, um den Server zu starten und auf eingehende Anfragen auf einem bestimmten Port zu hören
 ```
 
 ## Klasse "index.css"
