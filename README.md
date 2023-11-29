@@ -531,7 +531,6 @@ app.post('/completions', async (req, res) => { // Definiert die Konfigurationsop
     }
 })
 ```
-Diese Klasse ermöglicht es dem Server, Benutzeranfragen für Chat Anfrage an die OpenAI GPT-3-API zu senden und die generierten Antworten an den Client zurückzugeben.
 
 ```javascript
 app.listen(PORT, () => console.log('Your server is running on PORT' + PORT)) // verwendet die app.listen-Methode, um den Server zu starten und auf eingehende Anfragen auf einem bestimmten Port zu hören
@@ -573,10 +572,11 @@ app.post('/completions', async (req, res) => { // Definiert die Konfigurationsop
 
 app.listen(PORT, () => console.log('Your server is running on PORT' + PORT)) // verwendet die app.listen-Methode, um den Server zu starten und auf eingehende Anfragen auf einem bestimmten Port zu hören
 ```
+Diese Klasse ermöglicht es dem Server, Benutzeranfragen für Chat Anfrage an die OpenAI GPT-3-API zu senden und die generierten Antworten an den Client zurückzugeben.
 
 ## Klasse "index.css"
 ```css
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap'); /*verwendet @import, um eine externe Schriftart von Google Fonts in unsere Webseite einzubinden.*/
 ```
 
 ```css
