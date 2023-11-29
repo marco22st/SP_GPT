@@ -576,122 +576,123 @@ Diese Klasse ermöglicht es dem Server, Benutzeranfragen für Chat Anfrage an di
 
 ## Klasse "index.css"
 ```css
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap'); /*verwendet @import, um eine externe Schriftart von Google Fonts in unsere Webseite einzubinden.*/
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap'); /* verwendet @import, um eine externe Schriftart von Google Fonts in unsere Webseite einzubinden */
 ```
 
 ```css
-* {
-    color: #fff;
-    font-family: 'Open Sans', sans-serif;
+* { /* wählt alle HTML-Elemente auf der Seite aus */
+    color: #fff; /* setzt die Textfarbe (color) aller ausgewählten Elemente auf Weiß (#fff) */
+    font-family: 'Open Sans', sans-serif; /* legt die Schriftart (font-family) für alle ausgewählten Elemente fest */
 }
 ```
 
 ```css
 body {
-    margin: 0;
-    padding: 0;
+    margin: 0; /* Dies setzt den Außenabstand (margin) des body Elements auf 0 */
+    padding: 0; /* Dies setzt den Innenabstand (padding) des body Elements auf 0 */
 }
 ```
 
 ```css
 .app {
-    background-color: #343541;
-    display: flex;
+    background-color: #343541; /* setzt die Hintergrundfarbe (background-color) der ausgewählten Elemente auf #343541 */
+    display: flex; /* Flexbox ist ein modernes Layout-Modell in CSS, das es ermöglicht, Elemente flexibel in einer Zeile oder Spalte
+                      anzuordnen und zu verteilen. */
 }
 ```
 
 ```css
 .side-bar {
-    background-color: #202123;
-    height: 100vh;
-    width: 244px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    background-color: #202123; /*  setzt die Hintergrundfarbe */
+    height: 100vh; /* Setzt die Höhe */
+    width: 244px; /* Setzt die Breite */
+    display: flex; /* Lexbox-Layout-Modell aktiviert */
+    flex-direction: column; /*  Elemente werdem in einer Spalte von oben nach unten angeordnet. */
+    justify-content: space-between; /* Verfügbare Platz wird gleichmäßig auf die Elemente auf der Hauptachse verteilt wird */
 }
 ```
 
 ```css
 button {
-    border: solid 0.5px rgba(255,255,255,0.5);
-    background-color: transparent;
-    border-radius: 5px;
-    padding: 10px;
-    margin: 10px;
+    border: solid 0.5px rgba(255,255,255,0.5); /* Setzt die Stilregeln für den Rahmen des Buttons */
+    background-color: transparent; /* Setzt die Hintergrundfarbe des Buttons */
+    border-radius: 5px; /* Setzt den Radius der abgerundeten Ecken des Buttons  */
+    padding: 10px; /* Setzt den Innenabstand (padding) des Buttons auf */
+    margin: 10px; /* Setzt den Ausßenabstand (margin) des Buttons auf */
 }
 ```
 
 ```css
 nav {
-    border-top: solid 0.5px rgba(255,255,255,0.5);
-    padding: 10px;
-    margin: 10px;
+    border-top: solid 0.5px rgba(255,255,255,0.5); /* Setzt die Stilregeln für die obere Begrenzung */
+    padding: 10px; /* Setzt den Innenabstand */
+    margin: 10px; /* Setzt den Außenabstand */
 }
 ```
 
 ```css
 .history {
-    padding: 10px;
-    margin: 10px;
-    height: 100%;
+    padding: 10px; /* Setzt den Innenabstand */
+    margin: 10px; /* Setzt den Außenabstand */
+    height: 100%; /* Setzt die Höhe */
 }
 ```
 
 ```css
 .history li {
-    list-style-type: none;
-    padding: 15px 0;
-    cursor: pointer;
+    list-style-type: none; /* Setzt den Stil für die Listendarstellung */
+    padding: 15px 0; /* Setzt den Innenabstand */
+    cursor: pointer; /* Setzt den Mauszeiger-Stil */
 }
 ```
 
 ```css
 .main {
-    height: 100vh;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    text-align: center;
+    height: 100vh; /* Setzt die Höhe */
+    width: 100%; /* Setzt die Breite */
+    display: flex; /* Lexbox-Layout-Modell aktiviert */
+    flex-direction: column; /*  Elemente werdem in einer Spalte von oben nach unten angeordnet. */
+    justify-content: space-between; /* Verfügbare Platz wird gleichmäßig auf die Elemente auf der Hauptachse verteilt wird */
+    align-items: center; /* Setzt die Ausrichtung der Elemente auf der Querachse auf center */
+    text-align: center; /* Setzt die horizontale Ausrichtung des Texts */
 }
 ```
 
 ```css
 .info {
-    color: rgba(255,255,255,0.5);
-    font-size: 11px;
-    padding: 10px;
+    color: rgba(255,255,255,0.5); /* Setzt die Textfargbe */
+    font-size: 11px; /* Setzt den Schriftgröße */
+    padding: 10px; /* Setzt den Innenabstand */
 }
 ```
 
 ```css
 .bottom-section {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    width: 100%; /* Setzt die Breite */
+    display: flex; /* Lexbox-Layout-Modell aktiviert */
+    flex-direction: column; /*  Elemente werdem in einer Spalte von oben nach unten angeordnet. */
+    justify-content: center; /* Horizontale Ausrichtung von Flexbox-Containern und ihren Elementen zu steuern */
+    align-items: center; /* Vertikale Ausrichtung von Flexbox-Containern und ihren Elementen zu steuern */
 }
 ```
 
 ```css
 .input-container {
-    position: relative;
-    width: 100%;
-    max-width: 650px;
+    position: relative; /*  Die position-Eigenschaft wird auf relative gesetzt */
+    width: 100%; /* Setzt die Breite */
+    max-width: 650px; /* Setzt die maximale Breite */
 }
 ```
 
 ```css
 input {
-    width: 100%;
-    border: none;
-    font-size: 20px;
-    background-color: rgba(255,255,255,0.05);
-    padding: 12px 15px;
-    border-radius: 5px;
-    box-shadow: rgba(0,0,0,0.05) 0 54px 55px,
+    width: 100%; /* Setzt die Breite */
+    border: none; /* entfernt den Rahmen */
+    font-size: 20px; /* Setzt die Schriftgröße */
+    background-color: rgba(255,255,255,0.05); /* Setzt die Hintergrundfarbe */
+    padding: 12px 15px; /* Setzt den Innenabstand */
+    border-radius: 5px; /* Setzt den Radius der abgerundeten Ecken */
+    box-shadow: rgba(0,0,0,0.05) 0 54px 55px, /* Setzt eine Schatten-Effek */
     rgba(0,0,0,0.05) 0 -12px 30px,
     rgba(0,0,0,0.05) 0 4px 6px,
     rgba(0,0,0,0.05) 0 12px 3px,
@@ -701,48 +702,48 @@ input {
 
 ```css
 input:focus {
-    outline: none;
+    outline: none; /* Anweisung outline: none; wird oft verwendet, um diese standardmäßige Umrisslinie zu entfernen */
 }
 ```
 
 ```css
 #submit {
-    position: absolute;
-    bottom: 15px;
-    right: 0;
-    cursor: pointer;
+    position: absolute; /* Element relativ zum nächsten positionierten Elternelement positioniert wird */
+    bottom: 15px; /* Setzt den Abstand vom unteren Rand */
+    right: 0; /* Setzt den Abstand vom rechten Rand */
+    cursor: pointer; /* Setzt den Mauszeiger-Stil  */
 }
 ```
 
 ```css
 .feed {
-    overflow: scroll;
-    width: 100%;
-    padding: 0;
+    overflow: scroll; /* Setzt die Regel für das Überlaufverhalten  */
+    width: 100%; /* Setzt die Breite */
+    padding: 0; /* Setzt den Innenabstand */
 }
 ```
 
 ```css
 .feed li {
-    display: flex;
-    background-color: #444654;
-    width: 100%;
-    padding: 20px;
-    margin: 20px 0;
+    display: flex; /* Lexbox-Layout-Modell aktiviert */
+    background-color: #444654; /* Setzt die Hintergrundfarbe */
+    width: 100%; /* Setzt die Breite */
+    padding: 20px; /* Setzt den Innenabstand */
+    margin: 20px 0; /* Setzt den Außenabstand */
 }
 ```
 
 ```css
 .feed p {
-    color: rgba(255,255,255,0.8);
-    font-size: 14px;
-    text-align: left;
+    color: rgba(255,255,255,0.8); /* Setzt die Textfarbe */
+    font-size: 14px;  /* Setzt die Schriftgröße */
+    text-align: left; /* Horizontale Ausrichtung des Textes innerhalb eines Elements zu steuern */
 }
 ```
 
 ```css
 .feed p.role {
-    min-width: 100px;
+    min-width: 100px; /* Minimale Breite eines Elements festzulegen */
 }
 ```
 
