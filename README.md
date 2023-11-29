@@ -399,24 +399,24 @@ Code visualisert Struktur und Verhalten eine Chat Anwendung
 import {useState, useEffect} from "react";
 
 function App() {
-    const [value, setValue] = useState(null)
-    const [message, setMessage] = useState(null)
-    const [previousChats, setPreviousChats] = useState([])
-    const [currentTitle, setCurrentTitle] = useState(null)
-
-    const createNewChat = () => {
+    const [value, setValue] = useState(null) // Speichert den aktuellen Benutzereingabe Text
+    const [message, setMessage] = useState(null) // Speichert die empfangene Nachricht
+    const [previousChats, setPreviousChats] = useState([]) // Speichert den bisherigen Chatverlauf als Array von Objekten
+    const [currentTitle, setCurrentTitle] = useState(null) // Speichert den Titel des aktuellen Chats
+ 
+    const createNewChat = () => { // Setzt Werte für Nachricht, Benutzereingabe und aktuellen Titel zurück, um neuen Chat zu starten
         setMessage(null)
         setValue('')
         setCurrentTitle(null)
     }
 
-    const handleClick = (uniqueTitle) => {
+    const handleClick = (uniqueTitle) => { // Wird aufgerufen, wenn auf Chat Titel in der Seitenleiste geklickt wird
         setCurrentTitle(uniqueTitle)
         setMessage(null)
         setValue('')
     }
 
-    const getMessages = async () => {
+    const getMessages = async () => { //  Sendet eine POST Anfrage an einen Server 
         const options = {
             method: 'POST',
             body: JSON.stringify({
@@ -428,19 +428,19 @@ function App() {
         }
         try {
             const response = await fetch('http://localhost:8000/completions', options)
-            const data = await response.json()
+            const data = await response.json() // Empfangene Server Nachricht wird hier gespeichert
             setMessage(data.choices[0].message)
         } catch (error) {
             console.error(error)
         }
     }
 
-    useEffect(() => {
+    useEffect(() => { // Überwacht Änderungen an den Zustandsvariablen message und currentTitle
         if (!currentTitle && value && message) {
-            setCurrentTitle(value)
+            setCurrentTitle(value) // aktuelle Titel wird auf den Wert (value) gesetzt
         }
-        if(currentTitle && value && message) {
-            setPreviousChats(previousChats => (
+        if(currentTitle && value && message) { 
+            setPreviousChats(previousChats => ( // // vorherige Chatverlauf wird aktualisiert
                 [...previousChats, {//wichtig
                     title: currentTitle,
                     role: 'user',
@@ -454,10 +454,10 @@ function App() {
         }
     }, [message, currentTitle])
 
-    const currentChat = previousChats.filter(previousChats => previousChats.title === currentTitle)
-    const uniqueTitles = Array.from(new Set(previousChats.map(previousChat => previousChat.title)))
+    const currentChat = previousChats.filter(previousChats => previousChats.title === currentTitle) // Filtert Chatverlauf
+    const uniqueTitles = Array.from(new Set(previousChats.map(previousChat => previousChat.title))) // Erstellt Array von Chat Titeln
 
-  return (
+  return ( // Gibt die Struktur der Benutzeroberfläche der Chat Anwendung zurück
     <div className="app">
       <section className="side-bar">
         <button onClick={createNewChat}>+ New Chat</button>
@@ -490,6 +490,7 @@ function App() {
 
 export default App
 ```
+Diese Klasse handelt um eine Chat Anwendung mit Funktionen zum Erstellen neuer Chats, Anzeigen von Chatverläufen und Senden von Benutzereingaben an einen Server.
 
 ### Klasse "server.js"
 ```javascript
