@@ -296,48 +296,52 @@ Zustandsvariable wird durch die mitgegebene Methode verändert.
 
 ```javascript
 const createNewChat = () => {
-    setMessage(null)
-    setValue('')
-    setCurrentTitle(null)
+    setMessage(null) // Setzt die Zustandsvariable 'message' auf 'null'
+    setValue('') // Setzt die Zustandsvariable 'value' auf einen leeren String
+    setCurrentTitle(null) // Setzt die Zustandsvariable 'currentTitle' auf 'null'
 }
 ```
+Mit dieser Funktion erstellt man eine neuen Chat.
 
 ```javascript
 const handleClick = (uniqueTitle) => {
-    setCurrentTitle(uniqueTitle)
-    setMessage(null)
-    setValue('')
+    setCurrentTitle(uniqueTitle) // Setzt die Zustandsvariable 'currentTitle' auf den übergebenen Wert 'uniqueTitle'
+    setMessage(null) // Setzt die Zustandsvariable 'message' auf 'null'
+    setValue('') // Setzt die Zustandsvariable 'value' auf einen leeren String
 }
 ```
+Ist eine Funktion, die aufgerufen wird, wenn auf ein Element geklickt wird.
 
 ```javascript
 const getMessages = async () => {
-    const options = {
-        method: 'POST',
+    const options = { // Konfiguriert die Optionen für die Fetch Anfrage
+        method: 'POST', // HTTP Methode der Anfrage
         body: JSON.stringify({
-            message: value
+            message: value // Sendet die Nachricht im JSON Format
         }),
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json' // Setzt den Content-Type-Header auf 'application/json'
+        }
         }
     }
     try {
-        const response = await fetch('http://localhost:8000/completions', options)
-        const data = await response.json()
-        setMessage(data.choices[0].message)
+        const response = await fetch('http://localhost:8000/completions', options) // Führt eine Fetch-Anfrage zum Server durch
+        const data = await response.json()  // Extrahiert Daten aus der Serverantwort im JSON-Format
+        setMessage(data.choices[0].message) // Setzt die Zustandsvariable 'message' basierend auf den erhaltenen Daten
     } catch (error) {
-        console.error(error)
+        console.error(error)  // Behandelt Fehler, die während der Fetch Anfrage auftreten können
     }
 }
 ```
+Diese Funktion ruft Daten von einem Server ab. 
 
 ```javascript
 useEffect(() => {
     if (!currentTitle && value && message) {
-        setCurrentTitle(value)
+        setCurrentTitle(value) // Setzt den aktuellen Titel auf den Wert (value)
     }
     if(currentTitle && value && message) {
-        setPreviousChats(previousChats => (
+        setPreviousChats(previousChats => (  // Aktualisiert den vorherigen Chatverlauf
             [...previousChats, {
                 title: currentTitle,
                 role: 'user',
@@ -351,15 +355,17 @@ useEffect(() => {
     }
 }, [message, currentTitle])
 ```
+Mit dieser Funktion soll ein Chatverlauf aktualisiert werden.
 
 ```javascript
-const currentChat = previousChats.filter(previousChats => previousChats.title === currentTitle)
+const currentChat = previousChats.filter(previousChats => previousChats.title === currentTitle) 
 const uniqueTitles = Array.from(new Set(previousChats.map(previousChat => previousChat.title)))
 ```
+Dieie Variable currentChat enthält ein Array mit Chat-Nachrichten, die zum aktuellen Titel gehören. Die Variable uniqueTitles enthält ein Array, das die eindeutigen Titel aller vorherigen Chats aus previousChats enthält.
 
 ```javascript
-<div className="app">
-    <section className="side-bar">
+<div className="app"> // Diese Struktur besteht aus zwei Abschnitten (<section>-Elementen), einem für die Seitenleiste (side-bar) und einem für den Hauptinhalt (main).
+    <section className="side-bar"> // Enthält Button mit Text "+ New Chat", der bei Klick Funktion createNewChat aufruft, bei Klick Titel wird Funktion handleClick aufgerufen.
         <button onClick={createNewChat}>+ New Chat</button>
         <ul className="history">
             {uniqueTitles?.map((uniqueTitle, index) => <li key={index} onClick={() => handleClick(uniqueTitle)}>{uniqueTitle}</li>)}
@@ -369,15 +375,15 @@ const uniqueTitles = Array.from(new Set(previousChats.map(previousChat => previo
         </nav>
     </section>
     <section className="main">
-        {!currentTitle && <h1>MarcoGPT</h1>}
-        <ul className="feed">
-            {currentChat.map((chatMessage, index) => <li key={index}>
+        {!currentTitle && <h1>MarcoGPT</h1>} // Wenn kein Titel vorhanden ist, wird h1 eingesetzt
+        <ul className="feed"> // Ist eine Liste von Chat Nachrichten
+            {currentChat.map((chatMessage, index) => <li key={index}> // wird verwendet, um über das Array zu iterieren und für jede Chat Nachricht ein Listenelement zu erstellen.
                 <p className='role'>{chatMessage.role}</p>
                 <p>{chatMessage.content}</p>
             </li>)}
         </ul>
         <div className="bottom-section">
-            <div className="input-container">
+            <div className="input-container"> // Container für die Benutzereingabe mit einem Eingabefeld (<input>), das den aktuellen Wert value darstellt
                 <input value={value} onChange={(e) => setValue(e.target.value)}/>
                 <div id="submit" onClick={getMessages}>➢</div>
             </div>
@@ -386,6 +392,7 @@ const uniqueTitles = Array.from(new Set(previousChats.map(previousChat => previo
     </section>
 </div>
 ```
+Code visualisert Struktur und Verhalten eine Chat Anwendung
 
 #### finale Version
 ```javascript
