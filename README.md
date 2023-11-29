@@ -286,11 +286,13 @@ history-Element enthält einen Cursor in Form einer Hand.
 ## React ChatGPT Clone
 ### Klasse "app.js"
 ```javascript
-const [value, setValue] = useState(null)
-const [message, setMessage] = useState(null)
-const [previousChats, setPreviousChats] = useState([])
-const [currentTitle, setCurrentTitle] = useState(null)
+const [value, setValue] = useState(null) // Initialisiert eine Zustandsvariable 'value' mit dem Wert 'null'
+const [message, setMessage] = useState(null) // Initialisiert eine Zustandsvariable 'message' mit dem Wert 'null'
+const [previousChats, setPreviousChats] = useState([]) // Initialisiert eine Zustandsvariable 'previousChats' als leeres Array
+const [currentTitle, setCurrentTitle] = useState(null) // Initialisiert eine Zustandsvariable 'currentTitle' mit dem Wert 'null'
 ```
+Zustandsvariable wird durch die mitgegebene Methode verändert. 
+
 
 ```javascript
 const createNewChat = () => {
