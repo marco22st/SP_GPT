@@ -1,130 +1,149 @@
+/* Einbinden der Open Sans-Schriftart von Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap');
 
+/* Globale Stile für das gesamte Dokument */
 * {
-    color: #fff;
-    font-family: 'Open Sans', sans-serif;
+    color: #fff; /* Textfarbe auf Weiß setzen */
+    font-family: 'Open Sans', sans-serif; /* Verwendung von Open Sans als Standardschriftart */
 }
 
 body {
-    margin: 0;
-    padding: 0;
+    margin: 0; /* Margin entfernen */
+    padding: 0; /* Padding entfernen */
 }
 
+/* Hauptcontainer der Anwendung */
 .app {
-    background-color: #343541;
-    display: flex;
+    background-color: #343541; /* Hintergrundfarbe setzen */
+    display: flex; /* Flexbox-Layout verwenden */
 }
 
+/* Stile für die Seitenleiste */
 .side-bar {
-    background-color: #202123;
-    height: 100vh;
-    width: 244px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    background-color: #202123; /* Hintergrundfarbe der Seitenleiste setzen */
+    height: 100vh; /* Volle Höhe des Viewports einnehmen */
+    width: 244px; /* Feste Breite für die Seitenleiste */
+    display: flex; /* Flexbox-Layout verwenden */
+    flex-direction: column; /* Anordnung der Kinder in Spalten */
+    justify-content: space-between; /* Platz zwischen den Kindern gleichmäßig verteilen */
 }
 
+/* Stile für Buttons in der Seitenleiste */
 button {
-    border: solid 0.5px rgba(255,255,255,0.5);
-    background-color: transparent;
-    border-radius: 5px;
-    padding: 10px;
-    margin: 10px;
+    border: solid 0.5px rgba(255,255,255,0.5); /* Rand mit leichtem Weiß-Ton */
+    background-color: transparent; /* Transparenter Hintergrund */
+    border-radius: 5px; /* Abgerundete Ecken */
+    padding: 10px; /* Innenabstand setzen */
+    margin: 10px; /* Außenabstand setzen */
 }
 
+/* Stile für die Navigationsleiste in der Seitenleiste */
 nav {
-    border-top: solid 0.5px rgba(255,255,255,0.5);
-    padding: 10px;
-    margin: 10px;
+    border-top: solid 0.5px rgba(255,255,255,0.5); /* Obere Begrenzung mit leichtem Weiß-Ton */
+    padding: 10px; /* Innenabstand setzen */
+    margin: 10px; /* Außenabstand setzen */
 }
 
+/* Stile für die Liste der Chat-Verläufe in der Seitenleiste */
 .history {
-    padding: 10px;
-    margin: 10px;
-    height: 100%;
+    padding: 10px; /* Innenabstand setzen */
+    margin: 10px; /* Außenabstand setzen */
+    height: 100%; /* Volle Höhe des Containers einnehmen */
 }
 
+/* Stile für Einträge in der Liste der Chat-Verläufe */
 .history li {
-    list-style-type: none;
-    padding: 15px 0;
-    cursor: pointer;
+    list-style-type: none; /* Listenpunktstil entfernen */
+    padding: 15px 0; /* Innenabstand oben und unten setzen */
+    cursor: pointer; /* Pointer für klickbare Elemente */
 }
 
+/* Stile für den Hauptbereich der Anwendung */
 .main {
-    height: 100vh;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    text-align: center;
+    height: 100vh; /* Volle Höhe des Viewports einnehmen */
+    width: 100%; /* Volle Breite des Containers einnehmen */
+    display: flex; /* Flexbox-Layout verwenden */
+    flex-direction: column; /* Anordnung der Kinder in Spalten */
+    justify-content: space-between; /* Platz zwischen den Kindern gleichmäßig verteilen */
+    align-items: center; /* Kinder in der Mitte ausrichten */
+    text-align: center; /* Text in der Mitte ausrichten */
 }
 
+/* Stile für Informationsabschnitt unten */
 .info {
-    color: rgba(255,255,255,0.5);
-    font-size: 11px;
-    padding: 10px;
+    color: rgba(255,255,255,0.5); /* Textfarbe mit leichtem Weiß-Ton */
+    font-size: 11px; /* Schriftgröße setzen */
+    padding: 10px; /* Innenabstand setzen */
 }
 
+/* Stile für den unteren Bereich der Anwendung */
 .bottom-section {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    width: 100%; /* Volle Breite des Containers einnehmen */
+    display: flex; /* Flexbox-Layout verwenden */
+    flex-direction: column; /* Anordnung der Kinder in Spalten */
+    justify-content: center; /* Kinder zentriert ausrichten */
+    align-items: center; /* Kinder in der Mitte ausrichten */
 }
 
+/* Stile für den Eingabebereich der Benutzer-Nachrichten */
 .input-container {
-    position: relative;
-    width: 100%;
-    max-width: 650px;
+    position: relative; /* Position relativ zum Elternelement */
+    width: 100%; /* Volle Breite des Containers einnehmen */
+    max-width: 650px; /* Maximale Breite des Containers setzen */
 }
 
+/* Stile für das Eingabefeld */
 input {
-    width: 100%;
-    border: none;
-    font-size: 20px;
-    background-color: rgba(255,255,255,0.05);
-    padding: 12px 15px;
-    border-radius: 5px;
+    width: 100%; /* Volle Breite des Containers einnehmen */
+    border: none; /* Kein Rand setzen */
+    font-size: 20px; /* Schriftgröße setzen */
+    background-color: rgba(255,255,255,0.05); /* Hintergrundfarbe mit leichtem Weiß-Ton */
+    padding: 12px 15px; /* Innenabstand setzen */
+    border-radius: 5px; /* Abgerundete Ecken */
     box-shadow: rgba(0,0,0,0.05) 0 54px 55px,
     rgba(0,0,0,0.05) 0 -12px 30px,
     rgba(0,0,0,0.05) 0 4px 6px,
     rgba(0,0,0,0.05) 0 12px 3px,
-    rgba(0,0,0,0.05) 0 -3px 5px;
+    rgba(0,0,0,0.05) 0 -3px 5px; /* Leichte Schatten setzen */
 }
 
+/* Stile für den Fokus auf das Eingabefeld */
 input:focus {
-    outline: none;
+    outline: none; /* Fokus-Umrandung entfernen */
 }
 
+/* Stile für den Button zum Absenden von Nachrichten */
 #submit {
-    position: absolute;
-    bottom: 15px;
-    right: 0;
-    cursor: pointer;
+    position: absolute; /* Absolute Positionierung im Eingabefeld */
+    bottom: 15px; /* Abstand nach unten setzen */
+    right: 0; /* Abstand nach rechts setzen */
+    cursor: pointer; /* Pointer für klickbares Element */
 }
 
+/* Stile für den Nachrichten-Feed */
 .feed {
-    overflow: scroll;
-    width: 100%;
-    padding: 0;
+    overflow: scroll; /* Scrollbalken anzeigen, wenn der Feed überläuft */
+    width: 100%; /* Volle Breite des Containers einnehmen */
+    padding: 0; /* Innenabstand entfernen */
 }
 
+/* Stile für Einträge im Nachrichten-Feed */
 .feed li {
-    display: flex;
-    background-color: #444654;
-    width: 100%;
-    padding: 20px;
-    margin: 20px 0;
+    display: flex; /* Flexbox-Layout verwenden */
+    background-color: #444654; /* Hintergrundfarbe setzen */
+    width: 100%; /* Volle Breite des Containers einnehmen */
+    padding: 20px; /* Innenabstand setzen */
+    margin: 20px 0; /* Außenabstand oben und unten setzen */
 }
 
+/* Stile für Text-Elemente im Nachrichten-Feed */
 .feed p {
-    color: rgba(255,255,255,0.8);
-    font-size: 14px;
-    text-align: left;
+    color: rgba(255,255,255,0.8); /* Textfarbe mit leichtem Weiß-Ton */
+    font-size: 14px; /* Schriftgröße setzen */
+    text-align: left; /* Text links ausrichten */
 }
 
+/* Stile für Rolleninformationen im Nachrichten-Feed */
 .feed p.role {
-    min-width: 100px;
+    min-width: 100px; /* Mindestbreite setzen */
 }
