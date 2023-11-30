@@ -3,7 +3,7 @@ const PORT = 8000;
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
-const fetch = require("node-fetch"); // Stelle sicher, dass node-fetch installiert ist
+const fetch = require("node-fetch"); // Stelle sicher, dass node-fetch installiert ist (braucht V2 "npm install node-fetch@2")
 
 const app = express();
 app.use(express.json());
