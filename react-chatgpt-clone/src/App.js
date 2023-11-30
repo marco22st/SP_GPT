@@ -1,42 +1,49 @@
 import { useState, useEffect } from "react";
 
 const App = () => {
-    const [value, setValue] = useState(null);
-    const [message, setMessage] = useState(null);
-    const [prevChats, setPrevChats] = useState([]);
-    const [currentTitle, setCurrentTitle] = useState(null);
-    const [chatHistories, setChatHistories] = useState([]);
-    const [chatHistoryID, setChatHistoryID] = useState(0);
+    // State-Hooks zur Verwaltung des Anwendungsstatus
+    const [value, setValue] = useState(null); // Eingabewert des Benutzers
+    const [message, setMessage] = useState(null); // Antwortnachricht vom Modell
+    const [prevChats, setPrevChats] = useState([]); // Vorherige Chat-Nachrichten
+    const [currentTitle, setCurrentTitle] = useState(null); // Aktueller Chat-Titel
+    const [chatHistories, setChatHistories] = useState([]); // Liste der Chat-Verläufe
+    const [chatHistoryID, setChatHistoryID] = useState(0); // ID des aktuellen Chat-Verlaufs
+
+    // Funktion zum Abrufen der Chat-Verläufe vom Server
     const fetchChatHistories = async () => {
         try {
-            const resp = await fetch('http://localhost:8080/history');
+            const resp = await fetch("http://localhost:8080/history");
             const data = await resp.json();
             setChatHistories(data._embedded.history);
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     };
 
+    // Funktion zum Abrufen der Chat-Nachrichten für einen bestimmten Verlauf
     const fetchChatMessages = async (chatHistoryId) => {
         try {
             const resp = await fetch(`http://localhost:8080/history/${chatHistoryId}/messages`);
             const data = await resp.json();
             setPrevChats(data._embedded.message);
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     };
 
-    async function checkIfHistoryExists(titleToCheck) {
-        const resp = await fetch('http://localhost:8080/history');
-        const data = await resp.json();
-        if (data._embedded && data._embedded.history && data._embedded.history.length > 0) {
-            return data._embedded.history.some(history => history.title === titleToCheck);
-        } else {
+    // Funktion zum Überprüfen, ob ein Chat-Verlauf mit einem bestimmten Titel bereits existiert
+    const checkIfHistoryExists = async (titleToCheck) => {
+        try {
+            const resp = await fetch("http://localhost:8080/history");
+            const data = await resp.json();
+            return data._embedded?.history?.some(history => history.title === titleToCheck) || false;
+        } catch (error) {
+            console.error(error);
             return false;
         }
-    }
+    };
 
+    // Handler für Klick-Ereignisse auf einen Chat-Verlauf in der Seitenleiste
     const handleClick = (uniqueTitle, chatHistoryId) => {
         setCurrentTitle(uniqueTitle);
         setMessage(null);
@@ -45,6 +52,7 @@ const App = () => {
         setChatHistoryID(chatHistoryId);
     };
 
+    // Funktion zum Erstellen eines neuen Chats, Rücksetzen relevanter Zustände
     const createNewChat = () => {
         setMessage(null);
         setValue("");
@@ -52,6 +60,7 @@ const App = () => {
         setPrevChats([]);
     };
 
+    // Funktion zum Abrufen von Vervollständigungs-Nachrichten für die Benutzereingabe
     const getMessages = async () => {
         const options = {
             method: "POST",
@@ -64,52 +73,57 @@ const App = () => {
         };
 
         try {
-            const resp = await fetch('http://localhost:8000/completions', options);
+            const resp = await fetch("http://localhost:8000/completions", options);
             const data = await resp.json();
-            setMessage(data.choices[0].message);
+            setMessage(data.choices?.[0]?.message || null);
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     };
 
+    // Funktion zum Speichern eines neuen Chat-Verlaufs auf dem Server
     const saveChatHistory = async (title) => {
         const options = {
             method: "POST",
-            body: JSON.stringify({ title: title }),
+            body: JSON.stringify({ title }),
             headers: { "Content-Type": "application/json" }
         };
 
         try {
-            const resp = await fetch('http://localhost:8080/history', options);
+            const resp = await fetch("http://localhost:8080/history", options);
             const data = await resp.json();
-            return data._links.self.href;
+            return data._links?.self?.href || null;
         } catch (error) {
-            console.log(error);
+            console.error(error);
+            return null;
         }
     };
 
+    // Funktion zum Speichern einer neuen Chat-Nachricht auf dem Server
     const saveChatMessage = async (chatHistoryRef, role, content) => {
         const options = {
             method: "POST",
             body: JSON.stringify({
-                role: role,
-                content: content,
+                role,
+                content,
                 chatHistory: chatHistoryRef
             }),
             headers: { "Content-Type": "application/json" }
         };
 
         try {
-            await fetch('http://localhost:8080/message', options);
+            await fetch("http://localhost:8080/message", options);
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     };
 
+    // Effekt für das Abrufen von Chat-Verläufen beim Laden der Komponente
     useEffect(() => {
         fetchChatHistories();
     }, []);
 
+    // Effekt zur Aktualisierung von Chat-Verlauf und Nachrichten bei Benutzereingabe und Vervollständigung
     useEffect(() => {
         if (!currentTitle && value && message) {
             setCurrentTitle(value);
@@ -128,9 +142,9 @@ const App = () => {
                         fetchChatHistories();
                     });
                 }
-            })
+            });
 
-            setPrevChats(prevChats => ([
+            setPrevChats([
                 {
                     title: currentTitle,
                     role: "user",
@@ -141,46 +155,57 @@ const App = () => {
                     role: message.role,
                     content: message.content
                 }
-            ]));
+            ]);
             setValue("");
         }
-    }, [message, currentTitle]);
+    }, [message, currentTitle, value, chatHistoryID]);
 
-    const currentChat = prevChats;
-
+    // JSX zum Rendern der Komponente
     return (
         <div className="app">
             <section className="side-bar">
-                <button onClick={createNewChat}>+ New chat</button>
+                {/* Button zum Erstellen eines neuen Chats */}
+                <button onClick={createNewChat}>+ Neuer Chat</button>
+                {/* Liste der Chat-Verläufe in der Seitenleiste */}
                 <ul className="history">
                     {chatHistories?.map((chatHistory, index) => (
-                        <li key={index} onClick={() => handleClick(chatHistory.title, chatHistory._links.self.href.split('/').slice(-1)[0])}>
+                        <li key={index} onClick={() => handleClick(chatHistory.title, chatHistory._links?.self?.href?.split('/').slice(-1)[0])}>
                             {chatHistory.title}
                         </li>
                     ))}
                 </ul>
+                {/* Navigationsinformationen */}
                 <nav>
-                    <p>Made by Marco</p>
+                    <p>Erstellt von Marco</p>
                 </nav>
             </section>
             <section className="main">
+                {/* Anzeige des Titels, wenn kein aktueller Titel vorhanden ist */}
                 {!currentTitle && <h1>Marco GPT</h1>}
+                {/* Liste der Chat-Nachrichten im Hauptbereich */}
                 <ul className="feed">
-                    {currentChat.map((chatMessage, index) => <li key={index}>
-                        <p className='role'>{chatMessage.role}</p>
-                        <p>{chatMessage.content}</p>
-                    </li>)}
+                    {prevChats.map((chatMessage, index) => (
+                        <li key={index}>
+                            {/* Anzeige von Rolle und Inhalt jeder Chat-Nachricht */}
+                            <p className='role'>{chatMessage.role}</p>
+                            <p>{chatMessage.content}</p>
+                        </li>
+                    ))}
                 </ul>
+                {/* Unterbereich mit Eingabefeld und Informationen */}
                 <div className="bottom-section">
                     <div className="input-container">
+                        {/* Eingabefeld für Benutzernachrichten */}
                         <input value={value} onChange={(e) => setValue(e.target.value)} />
+                        {/* Button zum Auslösen der Nachrichtenvervollständigung */}
                         <div id="submit" onClick={getMessages}>➢</div>
                     </div>
-                    <p className="info">Free Research Preview. ChatGPT may produce inaccurate information about people, places, or facts. ChatGPT August 3 Version</p>
+                    {/* Informationen zur Forschungsvorschau */}
+                    <p className="info">Freie Forschungsvorschau. ChatGPT kann ungenaue Informationen zu Personen, Orten oder Fakten liefern. ChatGPT Version vom 3. August</p>
                 </div>
             </section>
         </div>
     );
-}
+};
 
 export default App;
